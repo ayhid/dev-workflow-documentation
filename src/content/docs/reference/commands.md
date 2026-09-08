@@ -278,7 +278,7 @@ children: none — this ticket was not split, so it is built as one unit: dev.mj
 
 ### `start <ISSUE-ID> [--type T] [--mode worktree|branch] [--repo PATH] [--print]`
 
-Renders the branch from `branch.pattern`, creates the worktree or branch, moves the ticket to the start rung. The last line is the directory to work in.
+Renders the branch from `branch.pattern`, fetches the base and forks from `origin/<base>` so the ticket starts on what has actually landed, creates the worktree or branch, and moves the ticket to the start rung. The local base branch is never moved. The last line is the directory to work in.
 
 ```
 $ dev.mjs start '#119' --print
@@ -290,7 +290,20 @@ mode:     worktree → /Users/you/project/.worktrees/chore-119-docs-a-documentat
 (--print: nothing was created)
 ```
 
-Without `--print` a `state:` line follows, holding the state read back. `NOT MOVED` means the checkout exists and the transition failed; retry the transition alone.
+Without `--print`, two more lines follow. `forked:` names the fork point: `origin/main` after a fetch, or the local branch with the reason when there is no remote or the fetch failed, as in `forked:   main — could not fetch origin/main: Could not resolve host`. `state:` holds the state read back; `NOT MOVED` means the checkout exists and the transition failed, so retry the transition alone.
+
+```
+$ dev.mjs start '#122'
+issue:    #122 — start: fork from origin/<base> after a fetch
+repo:     . (/Users/you/project)
+branch:   fix/122-start-fork-from-origin-base   (base: main, type: fix)
+mode:     worktree → /Users/you/project/.worktrees/fix-122-start-fork-from-origin-base
+forked:   origin/main
+created:  new branch
+state:    In Progress
+
+cd /Users/you/project/.worktrees/fix-122-start-fork-from-origin-base
+```
 
 ### `resume [ISSUE-ID] [--repo PATH] [--print]`
 
