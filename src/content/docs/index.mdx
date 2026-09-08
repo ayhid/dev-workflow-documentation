@@ -1,0 +1,36 @@
+---
+title: claude-dev-workflow
+description: Ticket-driven development with Claude Code, against YouTrack or GitHub Issues, installed per project.
+template: splash
+hero:
+  tagline: Start from a ticket, agree what done means, land it the way the project delivers. Fifteen Claude Code skills, one config file, no global state.
+  actions:
+    - text: Quick start
+      link: /dev-workflow-documentation/quick-start/
+      icon: right-arrow
+    - text: Source on GitHub
+      link: https://github.com/ayhid/claude-dev-workflow
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid stagger>
+  <Card title="Quick start" icon="rocket">
+    Install, initialise a project, run a first ticket through to a pull request. One page.
+    [Go →](/dev-workflow-documentation/quick-start/)
+  </Card>
+  <Card title="Use cases" icon="open-book">
+    Ticket work on YouTrack or GitHub Issues, joining a brownfield codebase, scaffolding docs for a new one, turning conventions into lint rules, recording decisions.
+    [Browse →](/dev-workflow-documentation/use-cases/youtrack/)
+  </Card>
+  <Card title="Recipes" icon="setting">
+    Short answers to one question each: worktrees, direct delivery, several repos, turning a hook off, upgrading, a localised YouTrack.
+    [Browse →](/dev-workflow-documentation/recipes/worktree-mode/)
+  </Card>
+  <Card title="Reference" icon="document">
+    Every configuration key, every command with real output, every skill, every hook.
+    [Browse →](/dev-workflow-documentation/reference/configuration/)
+  </Card>
+</CardGrid>
