@@ -208,6 +208,13 @@ Omit for a single repository at the root.
 "hooks": { "sessionStart": true, "updateCheck": true, "commitTicket": true, "adrImmutable": true }
 ```
 
+| Key | Hook |
+| --- | --- |
+| `sessionStart` | the standup printed when a session opens |
+| `updateCheck` | the one-line update notice when a session opens |
+| `commitTicket` | the guard on `git commit -m` subjects |
+| `adrImmutable` | the guard on editing accepted decision records |
+
 The hooks read this themselves, which is what makes an opt-out survive an update. `commit.enforce` and `docs.enforce` are older spellings for the last two and can only disable, never re-enable. See [Hooks](/dev-workflow-documentation/reference/hooks/).
 
 ## `tdd`
