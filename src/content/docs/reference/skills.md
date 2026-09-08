@@ -41,11 +41,13 @@ Argument: the parent issue ID.
 
 ### `/dev-build`
 
-Builds a planned issue: moves it to the start rung, checks it out in a worktree, implements against the agreed criteria with ticket-referencing commits, verifies each with evidence, and delivers the way the project delivers. A split ticket has its ready units built **in parallel**, one `dev-builder` subagent per unit in its own worktree, landed a wave at a time.
+Builds a planned issue. The session is the orchestrator and never builds: it moves the ticket to the start rung, checks it out in a worktree, dispatches one `dev-builder` subagent **in the background**, collects its report, verifies with the checks and the audit lens, and delivers the way the project delivers. A split ticket has its ready units built **in parallel**, one builder per unit in its own worktree, landed a wave at a time. The closing comment on the ticket lists commits, tests added, criteria with evidence, what the builder noticed outside its unit, and anything blocked.
+
+`/dev-build <ID> auto` chains every wave on one approval. It is refused under `pr` delivery, since a wave ends at open pull requests, and a hedged approval is not approval.
 
 Refuses to touch a file before the plan is agreed, and never closes a ticket unasked.
 
-Argument: an issue ID.
+Argument: an issue ID, optionally followed by `auto`.
 
 ### `/dev-tdd`
 
@@ -111,7 +113,7 @@ Installed as one file each under `.claude/agents/dev-*.md`. Each pins its model 
 | `dev-review-blind` | `/dev-review` | the diff, and nothing else | middle: judgement over bounded material |
 | `dev-review-edge` | `/dev-review` | the diff plus the full source of the changed files | middle |
 | `dev-review-audit` | `/dev-review` | the diff, the source and the ticket | middle |
-| `dev-builder` | `/dev-build` | one work unit of a split ticket, in its own worktree: reads the config and the unit's ticket, drives each criterion through the TDD loop, commits with the unit's ID, runs the checks, returns one JSON report | the session's own model: code that ships |
+| `dev-builder` | `/dev-build` | one work unit, in its own worktree: reads the config and the unit's ticket, drives each criterion through the TDD loop, stops the line on a red suite, reports `blocked` on an irreversible step, commits with the unit's ID, runs the checks once, returns one JSON report with what it noticed outside the unit | the session's own model: code that ships |
 
 The blind lens must run outside the session that knows the intent. A reviewer who knows what a change is for reads the code as confirmation of it.
 
